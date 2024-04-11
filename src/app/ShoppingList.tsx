@@ -76,7 +76,7 @@ const ShoppingList = () => {
     }
   }
 
-  const handleDeleteValue = (idToColor: number) => {
+  const handleDeleteValue = (idToDelete: number) => {
     // const newDisplayValues = displayValues.map(displayValue => {
     //   if (displayValue.id === idToColor) {
     //     return {
@@ -88,7 +88,7 @@ const ShoppingList = () => {
     //   return displayValue
     // })
     const newDisplayValues = displayValues.filter(
-      displayValue => displayValue.id !== idToColor
+      displayValue => displayValue.id !== idToDelete
     )
 
     setDisplayValues(newDisplayValues)
