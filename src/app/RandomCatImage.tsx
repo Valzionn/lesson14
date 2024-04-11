@@ -7,8 +7,8 @@ type Cat = {
   height: number
 }
 
-const getRandomCat = async (): Promise<Cat[]> => {
-  const res = await fetch('https://api.thecatapi.com/v1/images/search')
+const getExpenses = async (): Promise<Cat[]> => {
+  const res = await fetch('http://localhost:3001/api/expenses')
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
@@ -22,7 +22,7 @@ const RandomCatImage = () => {
   const [cat, setCat] = useState<Cat>()
 
   const fetchCat = async () => {
-    const fetchedCat = await getRandomCat()
+    const fetchedCat = await getExpenses()
     setCat(fetchedCat[0])
   }
   useEffect(() => {
