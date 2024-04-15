@@ -1,13 +1,12 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-type Cat = {
-  id: string
-  url: string
-  width: number
-  height: number
+type Expense = {
+  id: number;
+  name: string;
+  cost: number;
 }
 
-const getExpenses = async (): Promise<Cat[]> => {
+const getExpenses = async (): Promise<Expense[]> => {
   const res = await fetch('http://localhost:3001/api/expenses')
 
   if (!res.ok) {
@@ -18,29 +17,35 @@ const getExpenses = async (): Promise<Cat[]> => {
   return response
 }
 
-const RandomCatImage = () => {
-  const [cat, setCat] = useState<Cat>()
+const ExpenseIds = () => {
+  const [expenses, setExpenses] = useState<Expense[]>([])
 
-  const fetchCat = async () => {
-    const fetchedCat = await getExpenses()
-    setCat(fetchedCat[0])
+  const fetchExpenses = async () => {
+   try {
+    const fetchedExpenses = await getExpenses()
+    setExpenses(fetchedExpenses)
+   } catch (error) {
+    console.error('Error fetching expenses')
+   }
   }
+  
+
   useEffect(() => {
-    fetchCat()
+    fetchExpenses()
   }, [])
-
-  if (!cat) {
-    return <p>Loading...</p>
-  }
 
   return (
     <div className='m-10'>
       <div className='mb-4'>
-        <p>Hello</p>
-        <img alt='random cat image' src={cat.url} />
+        <p>Expenses:</p>
+        <ul>
+          {expenses.map((expense) => (
+            <li key={expense.id}>{expense.name} - {expense.cost} kr.</li>
+          ))}
+        </ul>
       </div>
     </div>
   )
 }
 
-export default RandomCatImage
+export default ExpenseIds
